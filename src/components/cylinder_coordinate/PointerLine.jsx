@@ -1,10 +1,12 @@
-import { Line } from "@react-three/drei";
+// This one is for the cylindical coordinate
 
+
+import { Line } from "@react-three/drei";
 export default function PointerLine({ theta, radius, phi}) {
 
 
-  const x_coordinate = radius * Math.sin(theta) * Math.cos(phi);
-  const y_coordinate = radius * Math.cos(theta);
+  const x_coordinate = radius * Math.cos(theta) * Math.cos(phi);
+  const y_coordinate = radius * Math.sin(theta);
   const z_coordinate = radius * Math.sin(theta) * Math.sin(phi);
 
 

@@ -2,14 +2,19 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Grid } from "@react-three/drei";
 import "./App.css";
 
-import YProjection from './components/YProjection'
-import XProjection from "./components/XProjection";
-import PointerLine from './components/PointerLine'
-import Axis from './components/Axis';
-import SideMenu from './components/SideMenu';
-import Sphere from "./components/Sphere";
-import PointerSphere from "./components/PointerSphere";
+import Cylinder from "./components/cylinder_coordinate/Cylinder.jsx";
+
+
+import Theta from './components/spherical_coordinate/Theta'
+import YProjection from './components/spherical_coordinate/YProjection'
+import XProjection from "./components/spherical_coordinate/XProjection";
+import PointerLine from './components/spherical_coordinate/PointerLine'
+import Axis from './components/spherical_coordinate/Axis';
+import SideMenu from './components/spherical_coordinate/SideMenu';
+import Sphere from "./components/spherical_coordinate/Sphere";
+import PointerSphere from "./components/spherical_coordinate/PointerSphere";
 import { useState } from "react";
+import { div } from "three/src/nodes/math/OperatorNode.js";
 
 function Scene({ isSphericalMode, radius, theta, phi }) {
   return (
@@ -19,8 +24,8 @@ function Scene({ isSphericalMode, radius, theta, phi }) {
 
       <Grid
         args={[40, 40]}
-        cellSize={1}
         cellThickness={0.5}
+        cellSize={1}
         cellColor="white"
         sectionSize={5}
         sectionThickness={0.5}
@@ -31,13 +36,25 @@ function Scene({ isSphericalMode, radius, theta, phi }) {
         side={2}
       />
 
-      <Axis mode={isSphericalMode} />
-      <Sphere radius={radius} />
-      <PointerSphere radius={radius} theta={theta} phi={phi}></PointerSphere>
-      <PointerLine  phi={phi} theta={theta} radius={radius}></PointerLine>
-      <XProjection  phi={phi} theta={theta} radius={radius}></XProjection>
-      <YProjection  phi={phi} theta={theta} radius={radius}></YProjection>
       <OrbitControls />
+      {isSphericalMode ? 
+        <>
+          <Axis/>
+          <Sphere radius={radius} />
+          <PointerSphere radius={radius} theta={theta} phi={phi}></PointerSphere>
+          <PointerLine  phi={phi} theta={theta} radius={radius}></PointerLine>
+          <XProjection  phi={phi} theta={theta} radius={radius}></XProjection>
+          <YProjection  phi={phi} theta={theta} radius={radius}></YProjection>
+        </>:
+        <>
+          <Axis/>
+          <Cylinder radius={radius} ></Cylinder>
+          <PointerLine  phi={phi} theta={theta} radius={radius}></PointerLine>
+
+
+        
+        </>
+      }
     </>
   );
 }
@@ -47,6 +64,7 @@ export default function App() {
   const [radius, setRadius] = useState(2);
   const [theta, setTheta] = useState(0);
   const [phi, setPhi] = useState(0);
+  const [z, setZ] = useState(0)
 
   return (
     <div style={{ display: "flex", height: "100vh" }}>
@@ -60,6 +78,8 @@ export default function App() {
         setTheta={setTheta}
         phi={phi}
         setPhi={setPhi}
+        z={z}
+        setZ={setZ}
       />
 
       <div style={{ flex: 1 }}>

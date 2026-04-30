@@ -3,10 +3,12 @@ export default function SideMenu({
   setIsSphericalMode,
   radius,
   setRadius,
-  theta,
+  theta, // Used in Spherical
   setTheta,
   phi,
-  setPhi
+  setPhi,
+  z,     // Add this for Cylindrical
+  setZ   // Add this for Cylindrical
 }) {
   return (
     <div className="sidemenu">
@@ -26,46 +28,60 @@ export default function SideMenu({
         원통 좌표계
       </button>
 
-
-        {/* Radius */}
+      {/* Radius - Always visible */}
       <div style={{ marginTop: "20px" }}>
         <div>Radius: {radius.toFixed(1)}</div>
         <input
           type="range"
           min="0.5"
-        style={{ width: "70%" }}
-
           max="5"
           step="0.01"
+          style={{ width: "70%" }}
           value={radius}
           onChange={(e) => setRadius(parseFloat(e.target.value))}
         />
       </div>
 
+      {/* Conditional Sliders */}
+      {isSphericalMode ? (
+        /* Spherical Mode: Show Theta */
+        <div style={{ marginTop: "20px" }}>
+          <div>Theta: {theta.toFixed(1)}</div>
+          <input
+            type="range"
+            min="-3.1415"
+            max="3.1415"
+            step="0.001"
+            style={{ width: "70%" }}
+            value={theta}
+            onChange={(e) => setTheta(parseFloat(e.target.value))}
+          />
+        </div>
+      ) : (
+        /* Cylindrical Mode: Show Z-axis */
+        <div style={{ marginTop: "20px" }}>
+          <div>Z-axis: {z.toFixed(1)}</div>
+          <input
+            type="range"
+            min="-5"
+            max="5"
+            step="0.01"
+            style={{ width: "70%" }}
+            value={z}
+            onChange={(e) => setZ(parseFloat(e.target.value))}
+          />
+        </div>
+      )}
 
-        {/* Theta */}
-      <div style={{ marginTop: "20px" }}>
-        <div>Theta: {theta.toFixed(1)}</div>
-        <input
-          type="range"
-        style={{ width: "70%" }}
-          min="-1.5707"
-          max="1.5707"
-          step="0.001"
-          value={theta}
-          onChange={(e) => setTheta(parseFloat(e.target.value))}
-        />
-      </div>
-
-        {/* Phi */}
+      {/* Phi - Always visible */}
       <div style={{ marginTop: "20px" }}>
         <div>Phi: {phi.toFixed(1)}</div>
         <input
           type="range"
-        style={{ width: "70%" }}
           min="-3.1415"
           max="3.1415"
           step="0.001"
+          style={{ width: "70%" }}
           value={phi}
           onChange={(e) => setPhi(parseFloat(e.target.value))}
         />
