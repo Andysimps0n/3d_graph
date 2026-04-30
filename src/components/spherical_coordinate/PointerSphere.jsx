@@ -1,12 +1,7 @@
-export default function PointerSphere({ radius, theta,phi }) {
-
-
+export default function PointerSphere({ radius, theta, phi }) {
   const x_coordinate = radius * Math.cos(theta) * Math.cos(phi);
   const y_coordinate = radius * Math.sin(theta);
-  const z_coordinate = radius * Math.sin(theta) * Math.sin(phi);
-
-
-    console.log(y_coordinate)
+  const z_coordinate = radius * Math.cos(theta) * Math.sin(phi);
 
   return (
     <mesh position={[x_coordinate, y_coordinate, z_coordinate]}>

@@ -3,20 +3,22 @@ import { OrbitControls, Grid } from "@react-three/drei";
 import "./App.css";
 
 import Cylinder from "./components/cylinder_coordinate/Cylinder.jsx";
+import CylindricalPointerLine from "./components/cylinder_coordinate/PointerLine.jsx";
+import CylindricalPointerSphere from "./components/cylinder_coordinate/PointerSphere.jsx";
+import CylindricalPhiArc from "./components/cylinder_coordinate/PhiArc.jsx";
+import CylindricalTiltArc from "./components/cylinder_coordinate/TiltArc.jsx";
 
 
-import Theta from './components/spherical_coordinate/Theta'
-import YProjection from './components/spherical_coordinate/YProjection'
-import XProjection from "./components/spherical_coordinate/XProjection";
-import PointerLine from './components/spherical_coordinate/PointerLine'
+import SphericalPointerLine from './components/spherical_coordinate/PointerLine'
+import Theta from "./components/spherical_coordinate/Theta";
+import Phi from "./components/spherical_coordinate/Phi";
 import Axis from './components/spherical_coordinate/Axis';
 import SideMenu from './components/spherical_coordinate/SideMenu';
 import Sphere from "./components/spherical_coordinate/Sphere";
 import PointerSphere from "./components/spherical_coordinate/PointerSphere";
 import { useState } from "react";
-import { div } from "three/src/nodes/math/OperatorNode.js";
 
-function Scene({ isSphericalMode, radius, theta, phi }) {
+function Scene({ isSphericalMode, radius, theta, phi, z }) {
   return (
     <>
       <ambientLight />
@@ -42,14 +44,17 @@ function Scene({ isSphericalMode, radius, theta, phi }) {
           <Axis/>
           <Sphere radius={radius} />
           <PointerSphere radius={radius} theta={theta} phi={phi}></PointerSphere>
-          <PointerLine  phi={phi} theta={theta} radius={radius}></PointerLine>
-          <XProjection  phi={phi} theta={theta} radius={radius}></XProjection>
-          <YProjection  phi={phi} theta={theta} radius={radius}></YProjection>
+          <SphericalPointerLine  phi={phi} theta={theta} radius={radius}></SphericalPointerLine>
+          <Phi phi={phi} />
+          <Theta theta={theta} phi={phi} />
         </>:
         <>
           <Axis/>
           <Cylinder radius={radius} ></Cylinder>
-          <PointerLine  phi={phi} theta={theta} radius={radius}></PointerLine>
+          <CylindricalPointerSphere phi={phi} radius={radius} z={z}></CylindricalPointerSphere>
+          <CylindricalPointerLine phi={phi} radius={radius} z={z}></CylindricalPointerLine>
+          <CylindricalPhiArc phi={phi} />
+          <CylindricalTiltArc phi={phi} radius={radius} z={z} />
 
 
         
@@ -89,6 +94,7 @@ export default function App() {
           radius={radius}
           theta={theta}
           phi={phi}
+          z={z}
           />
         </Canvas>
       </div>
